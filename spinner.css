@@ -1,0 +1,28 @@
+.loading-spinner {
+    position: relative;
+    display: block;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    /* min-height: 36px; */
+    margin: 0px 10px;
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    margin: 0px -10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: spinner 1s linear infinite;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./spinner.css" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <div class="video-block-list" id="video-block-list">
+    </div>
+
+    <div id="control-pannel" style="display: none;">
+        <input id="username" type="text" placeholder="Username" />
+        <div id="sdp-control">
+            <div class="form-group">
+                <input placeholder="Paste remote connection string here" id="remote-sdp" />
+            </div>
+            <div class="button-group">
+                <button id="add-user">
+                    <span id="add-user-spinner" class="loading-spinner"></span>
+                    <span>Add User</span>
+                </button>
+                <button id="connect">
+                    <span id="connect-spinner" class="loading-spinner"></span>
+                    <span>Connect</span>
+                </button>
+                <button id="cancel-add-user" disabled>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./utils.js"></script>
+<script src="./queue.js"></script>
+<script src="./media.js"></script>
+<script src="./index.js"></script>
+
+</html>
