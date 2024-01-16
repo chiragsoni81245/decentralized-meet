@@ -2,11 +2,22 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="./scrollBar.css" />
     <link rel="stylesheet" href="./spinner.css" />
+    <link rel="stylesheet" href="./modal.css" />
     <link rel="stylesheet" href="./style.css" />
+    <script src="./modal.js"></script>
 </head>
 
 <body>
+    <div id="overlay" onclick="closeModal()"></div>
+    <div id="modal">
+        <span id="closeBtn" onclick="closeModal()">&times;</span>
+        <p class="modal-header"></p>
+        <div class="modal-body">
+        </div>
+        <div class="buttons-container"></div>
+    </div>
     <div class="video-block-list" id="video-block-list">
     </div>
 

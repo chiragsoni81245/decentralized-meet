@@ -57,7 +57,7 @@ async function createOffer({ username } = {}) {
     const connectionObject = { status: 0, connection: lc }
     lc.onicecandidate = (e) => {
         iceCandidates.push(e.candidate)
-        console.log(`[Channel Id: ${channelId}] New ICE Candidate Added, Candidate: ${JSON.stringify({ candidate: e.candidate })}`)
+        // console.log(`[Channel Id: ${channelId}] New ICE Candidate Added, Candidate: ${JSON.stringify({ candidate: e.candidate })}`)
     }
     lc.addTrack(localMedia.tracks.audioTrack)
     lc.addTrack(localMedia.tracks.videoTrack)
@@ -95,7 +95,7 @@ async function createAnswer({ remoteSDP, username } = {}) {
     const connectionObject = { status: 0, connection: rc }
     rc.onicecandidate = (e) => {
         iceCandidates.push(e.candidate)
-        console.log(`[Channel Id: ${channelId}] New ICE Candidate Added, Candidate: ${JSON.stringify({ candidate: e.candidate })}`)
+        // console.log(`[Channel Id: ${channelId}] New ICE Candidate Added, Candidate: ${JSON.stringify({ candidate: e.candidate })}`)
     }
     rc.addTrack(localMedia.tracks.audioTrack)
     rc.addTrack(localMedia.tracks.videoTrack)
@@ -139,15 +139,23 @@ async function addUser() {
     }
     const { channelId, sdp: localSDP, iceCandidates } = await createOffer({ username })
     currentChannelId = channelId
-    await wait(0.2, () => {
-        navigator.clipboard.writeText(JSON.stringify({
-            sdp: localSDP,
-            iceCandidates
-        }))
+    const connectionString = JSON.stringify({
+        sdp: localSDP,
+        iceCandidates
+    }, null, 2)
+    setModalContext({
+        header: "Here's your Connection String, send it to person to whom you want to connect!!",
+        body: connectionString,
+        buttons: [{
+            name: "Copy",
+            onClick: () => {
+                navigator.clipboard.writeText(connectionString)
+            }
+        }]
     })
+    openModal()
     usernameElement.value = ""
     addUserBtnSpinnerElement.classList.remove("spinner");
-    alert("Connection String Copied in your clipboard, send it to person to whom you want to connect!!")
 }
 
 async function connect() {
@@ -175,10 +183,18 @@ async function connect() {
         }
         const { channelId: _channelId, sdp: localSDP, iceCandidates = [] } = await createAnswer({ remoteSDP, username })
         channelId = _channelId
-        await wait(0.2, () => {
-            navigator.clipboard.writeText(JSON.stringify({ sdp: localSDP, iceCandidates }))
+        const connectionString = JSON.stringify({ sdp: localSDP, iceCandidates }, null, 2)
+        setModalContext({
+            header: "Here's your Connection String, send it to person to whom you want to connect!!",
+            body: connectionString,
+            buttons: [{
+                name: "Copy",
+                onClick: () => {
+                    navigator.clipboard.writeText(connectionString)
+                }
+            }]
         })
-        alert("Connection String Copied in your clipboard, send it to person to whom you want to connect!!")
+        openModal()
     }
 
     for (let candidate of iceCandidates) {
